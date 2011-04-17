@@ -40,11 +40,11 @@
 
 ## Map
 
-### (name:document)->list(word:1)
+### (identifier:text)->[(word1:1),(word2:1),...]
 
 ## Reduce
 
-### (word:list(1,1,1...)) -> (word:count)
+### (word:[1,1,1...]) -> (word:count)
 
 !SLIDE
 
@@ -54,17 +54,17 @@
 
 ### (in->out)
 
-### (name:document)->list(word:1)
+### (identifier:text)->[(word1:1),(word2:1),...]
 
-### ("mr.txt":"hello map reduce! I like map reduce") -> ((hello:1), (map:1), ...)
+### ("mr.txt":"hello map reduce! I like map reduce") -> [(hello:1), (map:1), ...]
 
 ## Reduce
 
-### (word:list(1,1,1...)) -> (word:count)
+### (word:[1,1,1...]) -> (word:count)
 
-### ("hello":(1)) -> ("hello":1)
+### ("hello":[1]) -> ("hello":1)
 
-### ("map":(1,1)) -> ("map":2)
+### ("map":[1,1]) -> ("map":2)
 
 !SLIDE
 
@@ -152,4 +152,8 @@
 !SLIDE
 
 # Thank You
+
+## These Slides:
+
+## github.com/jackowayed/map-reduce-intro/
     
