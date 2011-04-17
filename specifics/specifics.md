@@ -16,6 +16,26 @@
 
 !SLIDE
 
+# Map
+
+## Process one piece of data at a time
+
+## Can't be based on any other data
+
+### (key:value)->[(key1:value1), (key1:value1), ...]
+
+!SLIDE
+
+# Reduce
+
+## Combine Pieces of Data
+
+## Reducer Gets All Values for a Given Key at Once
+
+### (key:[value1,value2,value3])->[(key:value)]
+
+!SLIDE
+
 # Count Words
 
 ## Map
@@ -28,23 +48,23 @@
 
 !SLIDE
 
-# Count Words
+# Count Words Example
 
-     @@@python
-     void map(String name, String document):
-       // name: document name
-       // document: document contents
-       for each word w in document:
-         EmitIntermediate(w, "1");
+## Map
 
-     void reduce(String word,
-                 Iterator partialCounts):
-       // word: a word
-       // partialCounts: a list of partial counts
-       int result = 0;
-       for each pc in partialCounts:
-         result += ParseInt(pc);
-       Emit(AsString(result));
+### (in->out)
+
+### (name:document)->list(word:1)
+
+### ("mr.txt":"hello map reduce! I like map reduce") -> ((hello:1), (map:1), ...)
+
+## Reduce
+
+### (word:list(1,1,1...)) -> (word:count)
+
+### ("hello":(1)) -> ("hello":1)
+
+### ("map":(1,1)) -> ("map":2)
 
 !SLIDE
 
@@ -54,34 +74,82 @@
 
 !SLIDE
 
-## Start with file that has the temperature of each day
+## Have every individual grade (each test, homework, etc) for every student
 
-## Want to find the year with highest average temperature
+## Want to find their final grade
+
+## Compute final grade by computing marking period grade, then averaging marking periods
+
+!SLIDE bullets incremental
+
+# Map 1
+
+* (grade-id:"student id, marking period, points, possible points")->
+* (student-id+marking-period:[points, possible points])
+
+!SLIDE bullets incremental
+
+# Reduce 1
+
+* (student-id+marking-period:[[points1, possible points1],[points2, possible points2],...])->
+* (student-id+marking-period:average)
+
+!SLIDE bullets incremental
+
+# Map 2
+
+* (student-id+marking-period:average)->
+* (student-id:average)
+
+!SLIDE bullets incremental
+
+# Reduce 2
+
+* (student-id:average)->
+* (student-id:final grade)
+
+!SLIDE bullets
+
+# PageRank
+
+* More important pages are linked to more
+* Value of a link is proportional to the PageRank of the linking page
+
+!SLIDE center
+
+![PageRank](pagerank.png)
+
+!SLIDE bullets
+
+# Problem
+
+* Chicken-egg
+* PageRank of a page depends on the PageRank of every page linking to it
+
+!SLIDE bullets
+
+# Solution
+
+* First MapReduce run assembles the graph (what links to what?)
+* Then, assume all have same PR
+* Repeatedly run more MapReduce runs that adjust the values
+* It will converge on the true values
 
 !SLIDE
 
-# First
+# Want to Use It?
 
-## Map
+## Hadoop
 
-### "day month year: temperature" -> (year, value)
+## Cloudera
 
-## Reduce
+## Amazon Elastic Map Reduce (or just EC2)
 
-## (year, list(value,value,...)) -> (year, average of values)
+## Scripts
 
-!SLIDE
-
-# Second
-
-## Map
-
-### (year, average of values) -> (year, average of values)
-
-## Reduce
-
-### (year, average of values) -> keep it if it's the max
-
-
+    $ cat input.txt | ./map | sort | ./reduce
 
 !SLIDE
+
+# Thank You
+    
